@@ -1,0 +1,204 @@
+module.exports = [
+"[externals]/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js [external] (next/dist/compiled/next-server/app-page-turbo.runtime.dev.js, cjs)", ((__turbopack_context__, module, exports) => {
+
+const mod = __turbopack_context__.x("next/dist/compiled/next-server/app-page-turbo.runtime.dev.js", () => require("next/dist/compiled/next-server/app-page-turbo.runtime.dev.js"));
+
+module.exports = mod;
+}),
+"[externals]/next/dist/server/app-render/action-async-storage.external.js [external] (next/dist/server/app-render/action-async-storage.external.js, cjs)", ((__turbopack_context__, module, exports) => {
+
+const mod = __turbopack_context__.x("next/dist/server/app-render/action-async-storage.external.js", () => require("next/dist/server/app-render/action-async-storage.external.js"));
+
+module.exports = mod;
+}),
+"[externals]/next/dist/server/app-render/work-unit-async-storage.external.js [external] (next/dist/server/app-render/work-unit-async-storage.external.js, cjs)", ((__turbopack_context__, module, exports) => {
+
+const mod = __turbopack_context__.x("next/dist/server/app-render/work-unit-async-storage.external.js", () => require("next/dist/server/app-render/work-unit-async-storage.external.js"));
+
+module.exports = mod;
+}),
+"[externals]/next/dist/server/app-render/work-async-storage.external.js [external] (next/dist/server/app-render/work-async-storage.external.js, cjs)", ((__turbopack_context__, module, exports) => {
+
+const mod = __turbopack_context__.x("next/dist/server/app-render/work-async-storage.external.js", () => require("next/dist/server/app-render/work-async-storage.external.js"));
+
+module.exports = mod;
+}),
+"[project]/i18n.ts [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "default",
+    ()=>__TURBOPACK__default__export__
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$i18next$2f$dist$2f$esm$2f$i18next$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/i18next/dist/esm/i18next.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$i18next$2f$dist$2f$es$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/node_modules/react-i18next/dist/es/index.js [app-ssr] (ecmascript) <locals>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$i18next$2f$dist$2f$es$2f$initReactI18next$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/react-i18next/dist/es/initReactI18next.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$i18next$2d$browser$2d$languagedetector$2f$dist$2f$esm$2f$i18nextBrowserLanguageDetector$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/i18next-browser-languagedetector/dist/esm/i18nextBrowserLanguageDetector.js [app-ssr] (ecmascript)");
+;
+;
+;
+const resources = {
+    en: {
+        translation: {
+            "hero.title": "Grow Your Car Wash Business",
+            "hero.description": "Join our platform and reach more customers with a seamless booking system. Manage your business, showcase your services, and increase revenue with minimal effort.",
+            "hero.benefits.management.title": "Easy Management",
+            "hero.benefits.management.description": "Control your services, availability, and pricing from one dashboard",
+            "hero.benefits.customers.title": "More Customers",
+            "hero.benefits.customers.description": "Access thousands of users looking for car wash services",
+            "hero.benefits.revenue.title": "Grow Revenue",
+            "hero.benefits.revenue.description": "Increase bookings and scale your business efficiently",
+            "form.title": "Register Your Car Wash",
+            "form.description": "Add your car wash business to our platform and start accepting bookings",
+            "form.basic": "Basic Information",
+            "form.name": "Car Wash Name",
+            "form.namePlaceholder": "e.g., Sparkle Auto Wash",
+            "form.phone": "Phone Number",
+            "form.address": "Address",
+            "form.addressPlaceholder": "e.g., 123 Main Street, California",
+            "form.location": "Location",
+            "form.getLocation": "📍 Get Location",
+            "form.locationHelper": "Click 'Get Location' button to retrieve coordinates",
+            "form.phoneHelper": "Enter 10 digits",
+            "form.washTypes": "Wash Types",
+            "form.addType": "+ Add Type",
+            "form.typeName": "Type Name",
+            "form.typeNamePlaceholder": "e.g., Basic Wash",
+            "form.price": "Price (EGP)",
+            "form.pricePlaceholder": "e.g., 20",
+            "form.fieldDescription": "Description",
+            "form.descriptionPlaceholder": "e.g., Exterior wash only",
+            "form.remove": "Remove",
+            "form.availability": "Availability",
+            "form.addDay": "+ Add Day",
+            "form.selectDay": "Select Day",
+            "form.startTime": "Start Time",
+            "form.endTime": "End Time",
+            "form.slots": "Available Slots",
+            "form.addSlot": "+ Add Slot",
+            "form.removeDay": "Remove Day",
+            "form.submit": "Register Car Wash",
+            "validation.phone": "Phone number must have exactly 10 digits after +20",
+            "validation.location": "Please get your location using the 'Get Location' button",
+            "validation.error": "Error",
+            "success.message": "Car wash registered successfully!",
+            "error.location": "Error getting location",
+            "error.locationNotSupported": "Geolocation is not supported by your browser",
+            "error.duplicate": "This time slot already exists for this day",
+            "error.noSlots": "Cannot add more unique time slots for this day"
+        }
+    },
+    ar: {
+        translation: {
+            "hero.title": "نمّ عملك في غسيل السيارات",
+            "hero.description": "انضم إلى منصتنا وصل إلى المزيد من العملاء بنظام حجز سلس. أدر عملك وعرض خدماتك وزيادة الإيرادات بسهولة.",
+            "hero.benefits.management.title": "إدارة سهلة",
+            "hero.benefits.management.description": "تحكم في خدماتك والمتاحية والتسعير من لوحة قيادة واحدة",
+            "hero.benefits.customers.title": "عملاء أكثر",
+            "hero.benefits.customers.description": "الوصول إلى آلاف المستخدمين الذين يبحثون عن خدمات غسيل السيارات",
+            "hero.benefits.revenue.title": "زيادة الإيرادات",
+            "hero.benefits.revenue.description": "زيادة الحجوزات وتوسيع عملك بكفاءة",
+            "form.title": "سجل غسل سيارتك",
+            "form.description": "أضف مغسلة السيارات الخاصة بك إلى منصتنا وابدأ في قبول الحجوزات",
+            "form.basic": "المعلومات الأساسية",
+            "form.name": "اسم مغسلة السيارات",
+            "form.namePlaceholder": "مثال: Sparkle Auto Wash",
+            "form.phone": "رقم الهاتف",
+            "form.address": "العنوان",
+            "form.addressPlaceholder": "مثال: 123 Main Street, California",
+            "form.location": "الموقع",
+            "form.getLocation": "📍 احصل على الموقع",
+            "form.locationHelper": "انقر على زر 'احصل على الموقع' لاسترجاع الإحداثيات",
+            "form.phoneHelper": "أدخل 10 أرقام",
+            "form.washTypes": "أنواع الغسيل",
+            "form.addType": "+ إضافة نوع",
+            "form.typeName": "اسم النوع",
+            "form.typeNamePlaceholder": "مثال: غسيل أساسي",
+            "form.price": "السعر (الجنيه المصري)",
+            "form.pricePlaceholder": "مثال: 20",
+            "form.fieldDescription": "الوصف",
+            "form.descriptionPlaceholder": "مثال: غسيل خارجي فقط",
+            "form.remove": "إزالة",
+            "form.availability": "التوفر",
+            "form.addDay": "+ إضافة يوم",
+            "form.selectDay": "اختر اليوم",
+            "form.startTime": "وقت البداية",
+            "form.endTime": "وقت الإنهاء",
+            "form.slots": "الفترات المتاحة",
+            "form.addSlot": "+ إضافة فترة",
+            "form.removeDay": "إزالة اليوم",
+            "form.submit": "سجل مغسلة السيارات",
+            "validation.phone": "يجب أن يحتوي رقم الهاتف على 10 أرقام بالضبط بعد +20",
+            "validation.location": "يرجى الحصول على موقعك باستخدام زر 'احصل على الموقع'",
+            "validation.error": "خطأ",
+            "success.message": "تم تسجيل مغسلة السيارات بنجاح!",
+            "error.location": "خطأ في الحصول على الموقع",
+            "error.locationNotSupported": "التحديد الجغرافي غير مدعوم في متصفحك",
+            "error.duplicate": "هذه الفترة الزمنية موجودة بالفعل في هذا اليوم",
+            "error.noSlots": "لا يمكن إضافة المزيد من الفترات الزمنية الفريدة لهذا اليوم"
+        }
+    }
+};
+__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$i18next$2f$dist$2f$esm$2f$i18next$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].use(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$i18next$2d$browser$2d$languagedetector$2f$dist$2f$esm$2f$i18nextBrowserLanguageDetector$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"]).use(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$i18next$2f$dist$2f$es$2f$initReactI18next$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["initReactI18next"]).init({
+    resources,
+    fallbackLng: "ar",
+    detection: {
+        order: [
+            "localStorage",
+            "navigator"
+        ],
+        caches: [
+            "localStorage"
+        ]
+    },
+    interpolation: {
+        escapeValue: false
+    }
+});
+const __TURBOPACK__default__export__ = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$i18next$2f$dist$2f$esm$2f$i18next$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"];
+}),
+"[project]/components/i18n-provider.tsx [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "I18nProvider",
+    ()=>I18nProvider
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$i18next$2f$dist$2f$es$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/node_modules/react-i18next/dist/es/index.js [app-ssr] (ecmascript) <locals>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$i18next$2f$dist$2f$es$2f$I18nextProvider$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/react-i18next/dist/es/I18nextProvider.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$i18n$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/i18n.ts [app-ssr] (ecmascript)");
+"use client";
+;
+;
+;
+;
+function I18nProvider({ children }) {
+    const [isInitialized, setIsInitialized] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        if (!__TURBOPACK__imported__module__$5b$project$5d2f$i18n$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].isInitialized) {
+            __TURBOPACK__imported__module__$5b$project$5d2f$i18n$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].init();
+        }
+        setIsInitialized(true);
+        // Set initial language to Arabic
+        __TURBOPACK__imported__module__$5b$project$5d2f$i18n$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].changeLanguage("ar");
+        document.documentElement.dir = "rtl";
+        document.documentElement.lang = "ar";
+    }, []);
+    if (!isInitialized) return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
+        children: children
+    }, void 0, false);
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$i18next$2f$dist$2f$es$2f$I18nextProvider$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["I18nextProvider"], {
+        i18n: __TURBOPACK__imported__module__$5b$project$5d2f$i18n$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"],
+        children: children
+    }, void 0, false, {
+        fileName: "[project]/components/i18n-provider.tsx",
+        lineNumber: 23,
+        columnNumber: 10
+    }, this);
+}
+}),
+];
+
+//# sourceMappingURL=%5Broot-of-the-server%5D__00146af3._.js.map
