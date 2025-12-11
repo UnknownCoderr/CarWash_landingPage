@@ -501,6 +501,7 @@ __turbopack_context__.s([
     "RegistrationForm",
     ()=>RegistrationForm
 ]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = /*#__PURE__*/ __turbopack_context__.i("[project]/node_modules/next/dist/build/polyfills/process.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$i18next$2f$dist$2f$es$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/node_modules/react-i18next/dist/es/index.js [app-client] (ecmascript) <locals>");
@@ -521,264 +522,183 @@ var _s = __turbopack_context__.k.signature();
 function RegistrationForm({ onSubmit }) {
     _s();
     const { t } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$i18next$2f$dist$2f$es$2f$useTranslation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useTranslation"])();
+    const mapRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
+    const mapInstance = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
+    const markerRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
+    const autocompleteRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
     const [formData, setFormData] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])({
-        name: "",
-        phoneNumber: "",
+        first_name: "",
+        last_name: "",
+        business_name: "",
+        phone_number: "",
+        business_number: "",
+        email: "",
+        business_email: "",
+        number_of_branches: "1",
+        role: "",
+        trade_license: "",
+        street: "",
+        street_number: "",
+        city: "",
+        area: "",
         address: "",
-        location: {
-            latitude: "",
-            longitude: ""
-        },
-        washTypes: [
-            {
-                name: "",
-                price: "",
-                description: ""
-            }
-        ],
-        availability: [
-            {
-                day: "Monday",
-                slots: [
-                    {
-                        startTime: "09:00",
-                        endTime: "10:00",
-                        slotNumber: 2
-                    }
-                ]
-            }
-        ]
+        latitude: "",
+        longitude: "",
+        sameBusinessPhone: false,
+        whatsappUpdates: false
     });
-    const handleInputChange = (e)=>{
-        const { name, value } = e.target;
-        // Phone number validation - only 10 digits
-        if (name === "phoneNumber") {
-            const digitsOnly = value.replace(/\D/g, "");
-            if (digitsOnly.length <= 10) {
-                setFormData((prev)=>({
-                        ...prev,
-                        [name]: digitsOnly
-                    }));
-            }
-            return;
+    const [errors, setErrors] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])({});
+    const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    // Initialize Google Maps
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "RegistrationForm.useEffect": ()=>{
+            const script = document.createElement("script");
+            script.src = `https://maps.googleapis.com/maps/api/js?key=${__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places`;
+            script.async = true;
+            script.defer = true;
+            script.onload = initializeMap;
+            document.head.appendChild(script);
+            return ({
+                "RegistrationForm.useEffect": ()=>{
+                    document.head.removeChild(script);
+                }
+            })["RegistrationForm.useEffect"];
         }
+    }["RegistrationForm.useEffect"], []);
+    const initializeMap = ()=>{
+        if (mapRef.current) {
+            mapInstance.current = new window.google.maps.Map(mapRef.current, {
+                zoom: 15,
+                center: {
+                    lat: 30.0444,
+                    lng: 31.2357
+                }
+            });
+            markerRef.current = new window.google.maps.Marker({
+                map: mapInstance.current,
+                draggable: true,
+                position: mapInstance.current.getCenter()
+            });
+            // Handle marker drag
+            markerRef.current.addListener("dragend", ()=>{
+                const position = markerRef.current.getPosition();
+                updateLocationFromMap(position.lat(), position.lng());
+            });
+            // Handle map click
+            mapInstance.current.addListener("click", (e)=>{
+                markerRef.current.setPosition(e.latLng);
+                updateLocationFromMap(e.latLng.lat(), e.latLng.lng());
+            });
+            // Initialize autocomplete for address search
+            const addressInput = document.getElementById("address-search");
+            if (addressInput && window.google) {
+                autocompleteRef.current = new window.google.maps.places.Autocomplete(addressInput, {
+                    componentRestrictions: {
+                        country: "eg"
+                    }
+                });
+                autocompleteRef.current.addListener("place_changed", ()=>{
+                    const place = autocompleteRef.current.getPlace();
+                    if (place.geometry && place.geometry.location) {
+                        const lat = place.geometry.location.lat();
+                        const lng = place.geometry.location.lng();
+                        mapInstance.current.setCenter({
+                            lat,
+                            lng
+                        });
+                        markerRef.current.setPosition({
+                            lat,
+                            lng
+                        });
+                        updateLocationFromMap(lat, lng);
+                    }
+                });
+            }
+        }
+    };
+    const updateLocationFromMap = (lat, lng)=>{
+        setFormData((prev)=>({
+                ...prev,
+                latitude: lat.toString(),
+                longitude: lng.toString()
+            }));
+    };
+    const handleInputChange = (e)=>{
+        const { name, value, type, checked } = e.target;
+        setFormData((prev)=>({
+                ...prev,
+                [name]: type === "checkbox" ? checked : value
+            }));
+        // Clear error for this field
+        if (errors[name]) {
+            setErrors((prev)=>{
+                const newErrors = {
+                    ...prev
+                };
+                delete newErrors[name];
+                return newErrors;
+            });
+        }
+    };
+    const handleSelectChange = (name, value)=>{
         setFormData((prev)=>({
                 ...prev,
                 [name]: value
             }));
-    };
-    const handleWashTypeChange = (index, field, value)=>{
-        setFormData((prev)=>{
-            const newWashTypes = [
-                ...prev.washTypes
-            ];
-            newWashTypes[index] = {
-                ...newWashTypes[index],
-                [field]: field === "price" ? Number.parseFloat(value) || "" : value
-            };
-            return {
-                ...prev,
-                washTypes: newWashTypes
-            };
-        });
-    };
-    const addWashType = ()=>{
-        setFormData((prev)=>({
-                ...prev,
-                washTypes: [
-                    ...prev.washTypes,
-                    {
-                        name: "",
-                        price: "",
-                        description: ""
-                    }
-                ]
-            }));
-    };
-    const removeWashType = (index)=>{
-        setFormData((prev)=>({
-                ...prev,
-                washTypes: prev.washTypes.filter((_, i)=>i !== index)
-            }));
-    };
-    const handleSlotChange = (dayIndex, slotIndex, field, value)=>{
-        setFormData((prev)=>{
-            const newAvailability = [
-                ...prev.availability
-            ];
-            const newSlots = [
-                ...newAvailability[dayIndex].slots
-            ];
-            // If updating time fields, check for duplicates
-            if ((field === "startTime" || field === "endTime") && newSlots.length > 1) {
-                const currentSlot = newSlots[slotIndex];
-                const newStartTime = field === "startTime" ? value : currentSlot.startTime;
-                const newEndTime = field === "endTime" ? value : currentSlot.endTime;
-                // Check if this time slot already exists (except current slot)
-                const isDuplicate = newSlots.some((slot, idx)=>idx !== slotIndex && slot.startTime === newStartTime && slot.endTime === newEndTime);
-                if (isDuplicate) {
-                    alert(t("error.duplicate"));
-                    return prev;
-                }
-            }
-            newSlots[slotIndex] = {
-                ...newSlots[slotIndex],
-                [field]: field === "slotNumber" ? Number.parseInt(value) || 0 : value
-            };
-            newAvailability[dayIndex] = {
-                ...newAvailability[dayIndex],
-                slots: newSlots
-            };
-            return {
-                ...prev,
-                availability: newAvailability
-            };
-        });
-    };
-    const addSlot = (dayIndex)=>{
-        setFormData((prev)=>{
-            const newAvailability = JSON.parse(JSON.stringify(prev.availability));
-            const existingSlots = newAvailability[dayIndex].slots;
-            // Find a unique time slot
-            let startTime = "12:00";
-            let endTime = "13:00";
-            let counter = 0;
-            while(existingSlots.some((slot)=>slot.startTime === startTime && slot.endTime === endTime)){
-                const startHour = (12 + counter) % 24;
-                const endHour = (13 + counter) % 24;
-                startTime = `${String(startHour).padStart(2, "0")}:00`;
-                endTime = `${String(endHour).padStart(2, "0")}:00`;
-                counter++;
-                if (counter > 23) {
-                    alert(t("error.noSlots"));
-                    return prev;
-                }
-            }
-            newAvailability[dayIndex].slots.push({
-                startTime,
-                endTime,
-                slotNumber: 2
+        if (errors[name]) {
+            setErrors((prev)=>{
+                const newErrors = {
+                    ...prev
+                };
+                delete newErrors[name];
+                return newErrors;
             });
-            return {
-                ...prev,
-                availability: newAvailability
-            };
-        });
-    };
-    const removeSlot = (dayIndex, slotIndex)=>{
-        setFormData((prev)=>{
-            const newAvailability = [
-                ...prev.availability
-            ];
-            newAvailability[dayIndex].slots = newAvailability[dayIndex].slots.filter((_, i)=>i !== slotIndex);
-            return {
-                ...prev,
-                availability: newAvailability
-            };
-        });
-    };
-    const addDay = ()=>{
-        setFormData((prev)=>({
-                ...prev,
-                availability: [
-                    ...prev.availability,
-                    {
-                        day: "Monday",
-                        slots: [
-                            {
-                                startTime: "09:00",
-                                endTime: "10:00",
-                                slotNumber: 2
-                            }
-                        ]
-                    }
-                ]
-            }));
-    };
-    const removeDay = (dayIndex)=>{
-        setFormData((prev)=>({
-                ...prev,
-                availability: prev.availability.filter((_, i)=>i !== dayIndex)
-            }));
-    };
-    const handleDayChange = (dayIndex, value)=>{
-        setFormData((prev)=>{
-            const newAvailability = [
-                ...prev.availability
-            ];
-            newAvailability[dayIndex].day = value;
-            return {
-                ...prev,
-                availability: newAvailability
-            };
-        });
-    };
-    const days = [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday"
-    ];
-    const handleGetLocation = ()=>{
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(async (position)=>{
-                const { latitude, longitude } = position.coords;
-                // Update location coordinates
-                setFormData((prev)=>({
-                        ...prev,
-                        location: {
-                            latitude: latitude.toString(),
-                            longitude: longitude.toString()
-                        }
-                    }));
-                // Fetch address using reverse geocoding
-                try {
-                    const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`);
-                    const data = await response.json();
-                    const address = data.address?.road || data.address?.street || data.address?.village || data.display_name || "";
-                    setFormData((prev)=>({
-                            ...prev,
-                            address: address
-                        }));
-                } catch (error) {
-                    console.error("Error fetching address:", error);
-                }
-                alert(`Location retrieved: ${latitude.toFixed(4)}, ${longitude.toFixed(4)}`);
-            }, (error)=>{
-                alert(`${t("error.location")}: ${error.message}`);
-            });
-        } else {
-            alert(t("error.locationNotSupported"));
         }
+    };
+    const validateForm = ()=>{
+        const newErrors = {};
+        if (!formData.first_name.trim()) newErrors.first_name = "First name is required";
+        if (!formData.last_name.trim()) newErrors.last_name = "Last name is required";
+        if (!formData.business_name.trim()) newErrors.business_name = "Business name is required";
+        if (!formData.phone_number.trim()) newErrors.phone_number = "Phone number is required";
+        if (!formData.email.trim()) newErrors.email = "Email is required";
+        if (!formData.business_email.trim()) newErrors.business_email = "Business email is required";
+        if (!formData.role) newErrors.role = "Role is required";
+        if (!formData.trade_license) newErrors.trade_license = "Trade license status is required";
+        if (!formData.street.trim()) newErrors.street = "Street is required";
+        if (!formData.city.trim()) newErrors.city = "City is required";
+        if (!formData.latitude || !formData.longitude) {
+            newErrors.location = "Please select location on map";
+        }
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
     };
     const handleSubmit = async (e)=>{
         e.preventDefault();
-        // Validate phone number has exactly 10 digits
-        if (formData.phoneNumber.length !== 10) {
-            alert(t("validation.phone"));
+        if (!validateForm()) {
             return;
         }
-        // Validate location
-        if (!formData.location.latitude || !formData.location.longitude) {
-            alert(t("validation.location"));
-            return;
-        }
-        // Prepare the data in the required format
-        const requestData = {
-            name: formData.name,
-            phoneNumber: `+20${formData.phoneNumber}`,
-            address: formData.address,
-            latitude: parseFloat(formData.location.latitude),
-            longitude: parseFloat(formData.location.longitude),
-            washTypes: formData.washTypes,
-            availability: formData.availability
-        };
-        console.log("Sending request data:", requestData);
+        setLoading(true);
         try {
-            const response = await fetch("http://localhost:4000/v1/api/carwash/", {
+            const requestData = {
+                first_name: formData.first_name,
+                last_name: formData.last_name,
+                business_name: formData.business_name,
+                phone_number: formData.phone_number,
+                business_number: formData.business_number || "",
+                email: formData.email,
+                business_email: formData.business_email,
+                number_of_branches: parseInt(formData.number_of_branches),
+                role: formData.role,
+                longitude: parseFloat(formData.longitude),
+                latitude: parseFloat(formData.latitude),
+                street: formData.street,
+                street_number: formData.street_number,
+                city: formData.city,
+                area: formData.area,
+                address: formData.address
+            };
+            const response = await fetch("/v1/api/carwash-form-registration/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -787,16 +707,38 @@ function RegistrationForm({ onSubmit }) {
             });
             if (!response.ok) {
                 const errorData = await response.json();
-                console.error("API Error:", errorData);
-                alert(`${t("validation.error")}: ${errorData.message}`);
-                return;
+                throw new Error(errorData.message || "Registration failed");
             }
             const result = await response.json();
-            alert(t("success.message"));
-            onSubmit(requestData);
+            alert("Registration submitted successfully!");
+            onSubmit?.(requestData);
+            // Reset form
+            setFormData({
+                first_name: "",
+                last_name: "",
+                business_name: "",
+                phone_number: "",
+                business_number: "",
+                email: "",
+                business_email: "",
+                number_of_branches: "1",
+                role: "",
+                trade_license: "",
+                street: "",
+                street_number: "",
+                city: "",
+                area: "",
+                address: "",
+                latitude: "",
+                longitude: "",
+                sameBusinessPhone: false,
+                whatsappUpdates: false
+            });
         } catch (error) {
-            alert(`${t("validation.error")}: ${error.message}`);
+            alert(`Error: ${error instanceof Error ? error.message : "Unknown error"}`);
             console.error("Registration error:", error);
+        } finally{
+            setLoading(false);
         }
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -812,20 +754,20 @@ function RegistrationForm({ onSubmit }) {
                                 children: t("form.title")
                             }, void 0, false, {
                                 fileName: "[project]/components/registration-form.tsx",
-                                lineNumber: 279,
+                                lineNumber: 251,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardDescription"], {
                                 children: t("form.description")
                             }, void 0, false, {
                                 fileName: "[project]/components/registration-form.tsx",
-                                lineNumber: 280,
+                                lineNumber: 252,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/registration-form.tsx",
-                        lineNumber: 278,
+                        lineNumber: 250,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -841,7 +783,7 @@ function RegistrationForm({ onSubmit }) {
                                             children: t("form.basic")
                                         }, void 0, false, {
                                             fileName: "[project]/components/registration-form.tsx",
-                                            lineNumber: 286,
+                                            lineNumber: 258,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -854,7 +796,7 @@ function RegistrationForm({ onSubmit }) {
                                                             children: t("form.name")
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/registration-form.tsx",
-                                                            lineNumber: 289,
+                                                            lineNumber: 261,
                                                             columnNumber: 21
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -866,13 +808,13 @@ function RegistrationForm({ onSubmit }) {
                                                             required: true
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/registration-form.tsx",
-                                                            lineNumber: 290,
+                                                            lineNumber: 262,
                                                             columnNumber: 21
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/components/registration-form.tsx",
-                                                    lineNumber: 288,
+                                                    lineNumber: 260,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -882,7 +824,7 @@ function RegistrationForm({ onSubmit }) {
                                                             children: t("form.phone")
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/registration-form.tsx",
-                                                            lineNumber: 300,
+                                                            lineNumber: 272,
                                                             columnNumber: 21
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -893,7 +835,7 @@ function RegistrationForm({ onSubmit }) {
                                                                     children: "+20"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/components/registration-form.tsx",
-                                                                    lineNumber: 302,
+                                                                    lineNumber: 274,
                                                                     columnNumber: 23
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -907,13 +849,13 @@ function RegistrationForm({ onSubmit }) {
                                                                     required: true
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/components/registration-form.tsx",
-                                                                    lineNumber: 303,
+                                                                    lineNumber: 275,
                                                                     columnNumber: 23
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/components/registration-form.tsx",
-                                                            lineNumber: 301,
+                                                            lineNumber: 273,
                                                             columnNumber: 21
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -921,19 +863,19 @@ function RegistrationForm({ onSubmit }) {
                                                             children: t("form.phoneHelper")
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/registration-form.tsx",
-                                                            lineNumber: 314,
+                                                            lineNumber: 286,
                                                             columnNumber: 21
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/components/registration-form.tsx",
-                                                    lineNumber: 299,
+                                                    lineNumber: 271,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/registration-form.tsx",
-                                            lineNumber: 287,
+                                            lineNumber: 259,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -943,7 +885,7 @@ function RegistrationForm({ onSubmit }) {
                                                     children: t("form.address")
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/registration-form.tsx",
-                                                    lineNumber: 318,
+                                                    lineNumber: 290,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -955,13 +897,13 @@ function RegistrationForm({ onSubmit }) {
                                                     required: true
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/registration-form.tsx",
-                                                    lineNumber: 319,
+                                                    lineNumber: 291,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/registration-form.tsx",
-                                            lineNumber: 317,
+                                            lineNumber: 289,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -971,7 +913,7 @@ function RegistrationForm({ onSubmit }) {
                                                     children: t("form.location")
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/registration-form.tsx",
-                                                    lineNumber: 329,
+                                                    lineNumber: 301,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -983,13 +925,13 @@ function RegistrationForm({ onSubmit }) {
                                                     disabled: true
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/registration-form.tsx",
-                                                    lineNumber: 330,
+                                                    lineNumber: 302,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/registration-form.tsx",
-                                            lineNumber: 328,
+                                            lineNumber: 300,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -1000,13 +942,13 @@ function RegistrationForm({ onSubmit }) {
                                             children: t("form.getLocation")
                                         }, void 0, false, {
                                             fileName: "[project]/components/registration-form.tsx",
-                                            lineNumber: 343,
+                                            lineNumber: 315,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/registration-form.tsx",
-                                    lineNumber: 285,
+                                    lineNumber: 257,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1020,7 +962,7 @@ function RegistrationForm({ onSubmit }) {
                                                     children: t("form.washTypes")
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/registration-form.tsx",
-                                                    lineNumber: 356,
+                                                    lineNumber: 328,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -1031,13 +973,13 @@ function RegistrationForm({ onSubmit }) {
                                                     children: t("form.addType")
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/registration-form.tsx",
-                                                    lineNumber: 357,
+                                                    lineNumber: 329,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/registration-form.tsx",
-                                            lineNumber: 355,
+                                            lineNumber: 327,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1052,7 +994,7 @@ function RegistrationForm({ onSubmit }) {
                                                                     children: t("form.typeName")
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/components/registration-form.tsx",
-                                                                    lineNumber: 365,
+                                                                    lineNumber: 337,
                                                                     columnNumber: 25
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -1061,13 +1003,13 @@ function RegistrationForm({ onSubmit }) {
                                                                     onChange: (e)=>handleWashTypeChange(index, "name", e.target.value)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/components/registration-form.tsx",
-                                                                    lineNumber: 366,
+                                                                    lineNumber: 338,
                                                                     columnNumber: 25
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/components/registration-form.tsx",
-                                                            lineNumber: 364,
+                                                            lineNumber: 336,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1077,7 +1019,7 @@ function RegistrationForm({ onSubmit }) {
                                                                     children: t("form.price")
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/components/registration-form.tsx",
-                                                                    lineNumber: 373,
+                                                                    lineNumber: 345,
                                                                     columnNumber: 25
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -1087,13 +1029,13 @@ function RegistrationForm({ onSubmit }) {
                                                                     onChange: (e)=>handleWashTypeChange(index, "price", e.target.value)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/components/registration-form.tsx",
-                                                                    lineNumber: 374,
+                                                                    lineNumber: 346,
                                                                     columnNumber: 25
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/components/registration-form.tsx",
-                                                            lineNumber: 372,
+                                                            lineNumber: 344,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1103,7 +1045,7 @@ function RegistrationForm({ onSubmit }) {
                                                                     children: t("form.fieldDescription")
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/components/registration-form.tsx",
-                                                                    lineNumber: 382,
+                                                                    lineNumber: 354,
                                                                     columnNumber: 25
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -1112,13 +1054,13 @@ function RegistrationForm({ onSubmit }) {
                                                                     onChange: (e)=>handleWashTypeChange(index, "description", e.target.value)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/components/registration-form.tsx",
-                                                                    lineNumber: 383,
+                                                                    lineNumber: 355,
                                                                     columnNumber: 25
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/components/registration-form.tsx",
-                                                            lineNumber: 381,
+                                                            lineNumber: 353,
                                                             columnNumber: 23
                                                         }, this),
                                                         formData.washTypes.length > 1 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1128,24 +1070,24 @@ function RegistrationForm({ onSubmit }) {
                                                             children: t("form.remove")
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/registration-form.tsx",
-                                                            lineNumber: 390,
+                                                            lineNumber: 362,
                                                             columnNumber: 25
                                                         }, this)
                                                     ]
                                                 }, index, true, {
                                                     fileName: "[project]/components/registration-form.tsx",
-                                                    lineNumber: 363,
+                                                    lineNumber: 335,
                                                     columnNumber: 21
                                                 }, this))
                                         }, void 0, false, {
                                             fileName: "[project]/components/registration-form.tsx",
-                                            lineNumber: 361,
+                                            lineNumber: 333,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/registration-form.tsx",
-                                    lineNumber: 354,
+                                    lineNumber: 326,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1159,7 +1101,7 @@ function RegistrationForm({ onSubmit }) {
                                                     children: t("form.availability")
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/registration-form.tsx",
-                                                    lineNumber: 406,
+                                                    lineNumber: 378,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -1170,13 +1112,13 @@ function RegistrationForm({ onSubmit }) {
                                                     children: t("form.addDay")
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/registration-form.tsx",
-                                                    lineNumber: 407,
+                                                    lineNumber: 379,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/registration-form.tsx",
-                                            lineNumber: 405,
+                                            lineNumber: 377,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1195,7 +1137,7 @@ function RegistrationForm({ onSubmit }) {
                                                                             children: t("form.selectDay")
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/components/registration-form.tsx",
-                                                                            lineNumber: 416,
+                                                                            lineNumber: 388,
                                                                             columnNumber: 27
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
@@ -1207,18 +1149,18 @@ function RegistrationForm({ onSubmit }) {
                                                                                     children: d
                                                                                 }, d, false, {
                                                                                     fileName: "[project]/components/registration-form.tsx",
-                                                                                    lineNumber: 423,
+                                                                                    lineNumber: 395,
                                                                                     columnNumber: 31
                                                                                 }, this))
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/components/registration-form.tsx",
-                                                                            lineNumber: 417,
+                                                                            lineNumber: 389,
                                                                             columnNumber: 27
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/components/registration-form.tsx",
-                                                                    lineNumber: 415,
+                                                                    lineNumber: 387,
                                                                     columnNumber: 25
                                                                 }, this),
                                                                 formData.availability.length > 1 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1228,13 +1170,13 @@ function RegistrationForm({ onSubmit }) {
                                                                     children: t("form.removeDay")
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/components/registration-form.tsx",
-                                                                    lineNumber: 430,
+                                                                    lineNumber: 402,
                                                                     columnNumber: 27
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/components/registration-form.tsx",
-                                                            lineNumber: 414,
+                                                            lineNumber: 386,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1249,7 +1191,7 @@ function RegistrationForm({ onSubmit }) {
                                                                                     children: t("form.startTime")
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/components/registration-form.tsx",
-                                                                                    lineNumber: 443,
+                                                                                    lineNumber: 415,
                                                                                     columnNumber: 31
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -1258,13 +1200,13 @@ function RegistrationForm({ onSubmit }) {
                                                                                     onChange: (e)=>handleSlotChange(dayIndex, slotIndex, "startTime", e.target.value)
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/components/registration-form.tsx",
-                                                                                    lineNumber: 444,
+                                                                                    lineNumber: 416,
                                                                                     columnNumber: 31
                                                                                 }, this)
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/components/registration-form.tsx",
-                                                                            lineNumber: 442,
+                                                                            lineNumber: 414,
                                                                             columnNumber: 29
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1274,7 +1216,7 @@ function RegistrationForm({ onSubmit }) {
                                                                                     children: t("form.endTime")
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/components/registration-form.tsx",
-                                                                                    lineNumber: 451,
+                                                                                    lineNumber: 423,
                                                                                     columnNumber: 31
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -1283,13 +1225,13 @@ function RegistrationForm({ onSubmit }) {
                                                                                     onChange: (e)=>handleSlotChange(dayIndex, slotIndex, "endTime", e.target.value)
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/components/registration-form.tsx",
-                                                                                    lineNumber: 452,
+                                                                                    lineNumber: 424,
                                                                                     columnNumber: 31
                                                                                 }, this)
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/components/registration-form.tsx",
-                                                                            lineNumber: 450,
+                                                                            lineNumber: 422,
                                                                             columnNumber: 29
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1299,7 +1241,7 @@ function RegistrationForm({ onSubmit }) {
                                                                                     children: t("form.slots")
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/components/registration-form.tsx",
-                                                                                    lineNumber: 459,
+                                                                                    lineNumber: 431,
                                                                                     columnNumber: 31
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -1309,13 +1251,13 @@ function RegistrationForm({ onSubmit }) {
                                                                                     onChange: (e)=>handleSlotChange(dayIndex, slotIndex, "slotNumber", e.target.value)
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/components/registration-form.tsx",
-                                                                                    lineNumber: 460,
+                                                                                    lineNumber: 432,
                                                                                     columnNumber: 31
                                                                                 }, this)
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/components/registration-form.tsx",
-                                                                            lineNumber: 458,
+                                                                            lineNumber: 430,
                                                                             columnNumber: 29
                                                                         }, this),
                                                                         day.slots.length > 1 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1327,23 +1269,23 @@ function RegistrationForm({ onSubmit }) {
                                                                                 children: t("form.remove")
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/components/registration-form.tsx",
-                                                                                lineNumber: 469,
+                                                                                lineNumber: 441,
                                                                                 columnNumber: 33
                                                                             }, this)
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/components/registration-form.tsx",
-                                                                            lineNumber: 468,
+                                                                            lineNumber: 440,
                                                                             columnNumber: 31
                                                                         }, this)
                                                                     ]
                                                                 }, slotIndex, true, {
                                                                     fileName: "[project]/components/registration-form.tsx",
-                                                                    lineNumber: 441,
+                                                                    lineNumber: 413,
                                                                     columnNumber: 27
                                                                 }, this))
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/registration-form.tsx",
-                                                            lineNumber: 439,
+                                                            lineNumber: 411,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -1355,24 +1297,24 @@ function RegistrationForm({ onSubmit }) {
                                                             children: t("form.addSlot")
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/registration-form.tsx",
-                                                            lineNumber: 481,
+                                                            lineNumber: 453,
                                                             columnNumber: 23
                                                         }, this)
                                                     ]
                                                 }, dayIndex, true, {
                                                     fileName: "[project]/components/registration-form.tsx",
-                                                    lineNumber: 413,
+                                                    lineNumber: 385,
                                                     columnNumber: 21
                                                 }, this))
                                         }, void 0, false, {
                                             fileName: "[project]/components/registration-form.tsx",
-                                            lineNumber: 411,
+                                            lineNumber: 383,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/registration-form.tsx",
-                                    lineNumber: 404,
+                                    lineNumber: 376,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -1381,38 +1323,38 @@ function RegistrationForm({ onSubmit }) {
                                     children: t("form.submit")
                                 }, void 0, false, {
                                     fileName: "[project]/components/registration-form.tsx",
-                                    lineNumber: 496,
+                                    lineNumber: 468,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/registration-form.tsx",
-                            lineNumber: 283,
+                            lineNumber: 255,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/components/registration-form.tsx",
-                        lineNumber: 282,
+                        lineNumber: 254,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/registration-form.tsx",
-                lineNumber: 277,
+                lineNumber: 249,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/components/registration-form.tsx",
-            lineNumber: 276,
+            lineNumber: 248,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/registration-form.tsx",
-        lineNumber: 275,
+        lineNumber: 247,
         columnNumber: 5
     }, this);
 }
-_s(RegistrationForm, "3rXvIi4ySFixdzl1FVI2zT7EkqI=", false, function() {
+_s(RegistrationForm, "/nc6JpeyeGfVIOA2pdPAF2Rlxh0=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$i18next$2f$dist$2f$es$2f$useTranslation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useTranslation"]
     ];

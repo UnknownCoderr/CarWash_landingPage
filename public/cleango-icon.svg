@@ -1,0 +1,56 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Outer circle background -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#c0f0f0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0077be;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="100" fill="url(#bgGradient)"/>
+  
+  <!-- Outer ring light -->
+  <circle cx="100" cy="100" r="95" fill="none" stroke="#ffffff" stroke-width="3" opacity="0.4"/>
+  
+  <!-- Outer ring dark -->
+  <circle cx="100" cy="100" r="88" fill="none" stroke="#0077be" stroke-width="2"/>
+  
+  <!-- Car body -->
+  <path d="M 55 95 Q 55 85 65 85 L 135 85 Q 145 85 145 95 L 145 110 Q 145 115 140 115 L 60 115 Q 55 115 55 110 Z" fill="white"/>
+  
+  <!-- Car top -->
+  <path d="M 70 85 L 75 65 Q 75 60 80 60 L 120 60 Q 125 60 125 65 L 130 85" fill="white"/>
+  
+  <!-- Left headlight -->
+  <ellipse cx="62" cy="98" rx="6" ry="8" fill="white"/>
+  
+  <!-- Right headlight -->
+  <ellipse cx="138" cy="98" rx="6" ry="8" fill="white"/>
+  
+  <!-- Left window -->
+  <rect x="72" y="72" width="12" height="10" fill="#0077be" opacity="0.3" rx="1"/>
+  
+  <!-- Right window -->
+  <rect x="116" y="72" width="12" height="10" fill="#0077be" opacity="0.3" rx="1"/>
+  
+  <!-- Water waves below car -->
+  <path d="M 45 125 Q 55 120 65 125 T 85 125 T 105 125 T 125 125 T 145 125 T 165 125" 
+        stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  
+  <path d="M 50 132 Q 60 128 70 132 T 90 132 T 110 132 T 130 132 T 150 132" 
+        stroke="white" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.8"/>
+  
+  <!-- Sparkles -->
+  <g fill="white">
+    <!-- Top right sparkle -->
+    <circle cx="125" cy="50" r="2"/>
+    <line x1="125" y1="45" x2="125" y2="55" stroke="white" stroke-width="1.5"/>
+    <line x1="120" y1="50" x2="130" y2="50" stroke="white" stroke-width="1.5"/>
+    
+    <!-- Top right second sparkle -->
+    <circle cx="145" cy="65" r="1.5"/>
+    <line x1="145" y1="61" x2="145" y2="69" stroke="white" stroke-width="1"/>
+    <line x1="141" y1="65" x2="149" y2="65" stroke="white" stroke-width="1"/>
+  </g>
+</svg>

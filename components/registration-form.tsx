@@ -1,273 +1,202 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 import { useTranslation } from "react-i18next"
+import dynamic from "next/dynamic"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { Checkbox } from "@/components/ui/checkbox"
+
+// Dynamically import Leaflet map component to avoid SSR issues
+const MapComponent = dynamic(() => import("@/components/map-component"), {
+  ssr: false,
+  loading: () => <div className="w-full h-96 bg-gray-200 rounded-lg flex items-center justify-center">Loading map...</div>,
+})
 
 export function RegistrationForm({ onSubmit }) {
   const { t } = useTranslation()
+
   const [formData, setFormData] = useState({
-    name: "",
-    phoneNumber: "",
+    first_name: "",
+    last_name: "",
+    business_name: "",
+    phone_number: "",
+    business_number: "",
+    email: "",
+    business_email: "",
+    number_of_branches: "1",
+    role: "",
+    street: "",
+    street_number: "",
+    city: "",
+    area: "",
     address: "",
-    location: { latitude: "", longitude: "" },
-    washTypes: [{ name: "", price: "", description: "" }],
-    availability: [
-      {
-        day: "Monday",
-        slots: [{ startTime: "09:00", endTime: "10:00", slotNumber: 2 }],
-      },
-    ],
+    latitude: "",
+    longitude: "",
   })
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target
-    
-    // Phone number validation - only 10 digits
-    if (name === "phoneNumber") {
-      const digitsOnly = value.replace(/\D/g, "")
-      if (digitsOnly.length <= 10) {
-        setFormData((prev) => ({
-          ...prev,
-          [name]: digitsOnly,
-        }))
-      }
-      return
+  const [errors, setErrors] = useState<{ [key: string]: string }>({})
+  const [loading, setLoading] = useState(false)
+
+  const updateLocationFromMap = (lat: number, lng: number) => {
+    setFormData((prev) => ({
+      ...prev,
+      latitude: lat.toString(),
+      longitude: lng.toString(),
+    }))
+  }
+
+  const handleAddressChange = (addressData: {
+    street: string
+    street_number: string
+    city: string
+    area: string
+    address: string
+  }) => {
+    setFormData((prev) => ({
+      ...prev,
+      street: addressData.street,
+      street_number: addressData.street_number,
+      city: addressData.city,
+      area: addressData.area,
+      address: addressData.address,
+    }))
+  }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, type, checked } = e.target
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }))
+    // Clear error for this field
+    if (errors[name]) {
+      setErrors((prev) => {
+        const newErrors = { ...prev }
+        delete newErrors[name]
+        return newErrors
+      })
     }
-    
+  }
+
+  const handleSelectChange = (name: string, value: string) => {
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }))
-  }
-
-  const handleWashTypeChange = (index, field, value) => {
-    setFormData((prev) => {
-      const newWashTypes = [...prev.washTypes]
-      newWashTypes[index] = {
-        ...newWashTypes[index],
-        [field]: field === "price" ? Number.parseFloat(value) || "" : value,
-      }
-      return { ...prev, washTypes: newWashTypes }
-    })
-  }
-
-  const addWashType = () => {
-    setFormData((prev) => ({
-      ...prev,
-      washTypes: [...prev.washTypes, { name: "", price: "", description: "" }],
-    }))
-  }
-
-  const removeWashType = (index) => {
-    setFormData((prev) => ({
-      ...prev,
-      washTypes: prev.washTypes.filter((_, i) => i !== index),
-    }))
-  }
-
-  const handleSlotChange = (dayIndex, slotIndex, field, value) => {
-    setFormData((prev) => {
-      const newAvailability = [...prev.availability]
-      const newSlots = [...newAvailability[dayIndex].slots]
-      
-      // If updating time fields, check for duplicates
-      if ((field === "startTime" || field === "endTime") && newSlots.length > 1) {
-        const currentSlot = newSlots[slotIndex]
-        const newStartTime = field === "startTime" ? value : currentSlot.startTime
-        const newEndTime = field === "endTime" ? value : currentSlot.endTime
-        
-        // Check if this time slot already exists (except current slot)
-        const isDuplicate = newSlots.some((slot, idx) => 
-          idx !== slotIndex && 
-          slot.startTime === newStartTime && 
-          slot.endTime === newEndTime
-        )
-        
-        if (isDuplicate) {
-          alert(t("error.duplicate"))
-          return prev
-        }
-      }
-      
-      newSlots[slotIndex] = {
-        ...newSlots[slotIndex],
-        [field]: field === "slotNumber" ? Number.parseInt(value) || 0 : value,
-      }
-      newAvailability[dayIndex] = {
-        ...newAvailability[dayIndex],
-        slots: newSlots,
-      }
-      return { ...prev, availability: newAvailability }
-    })
-  }
-
-  const addSlot = (dayIndex) => {
-    setFormData((prev) => {
-      const newAvailability = JSON.parse(JSON.stringify(prev.availability))
-      const existingSlots = newAvailability[dayIndex].slots
-      
-      // Find a unique time slot
-      let startTime = "12:00"
-      let endTime = "13:00"
-      let counter = 0
-      
-      while (existingSlots.some(slot => slot.startTime === startTime && slot.endTime === endTime)) {
-        const startHour = (12 + counter) % 24
-        const endHour = (13 + counter) % 24
-        startTime = `${String(startHour).padStart(2, "0")}:00`
-        endTime = `${String(endHour).padStart(2, "0")}:00`
-        counter++
-        
-        if (counter > 23) {
-          alert(t("error.noSlots"))
-            return prev
-        }
-      }
-      
-      newAvailability[dayIndex].slots.push({
-        startTime,
-        endTime,
-        slotNumber: 2,
+    if (errors[name]) {
+      setErrors((prev) => {
+        const newErrors = { ...prev }
+        delete newErrors[name]
+        return newErrors
       })
-      
-      return { ...prev, availability: newAvailability }
-    })
-  }
-
-  const removeSlot = (dayIndex, slotIndex) => {
-    setFormData((prev) => {
-      const newAvailability = [...prev.availability]
-      newAvailability[dayIndex].slots = newAvailability[dayIndex].slots.filter((_, i) => i !== slotIndex)
-      return { ...prev, availability: newAvailability }
-    })
-  }
-
-  const addDay = () => {
-    setFormData((prev) => ({
-      ...prev,
-      availability: [
-        ...prev.availability,
-        {
-          day: "Monday",
-          slots: [{ startTime: "09:00", endTime: "10:00", slotNumber: 2 }],
-        },
-      ],
-    }))
-  }
-
-  const removeDay = (dayIndex) => {
-    setFormData((prev) => ({
-      ...prev,
-      availability: prev.availability.filter((_, i) => i !== dayIndex),
-    }))
-  }
-
-  const handleDayChange = (dayIndex, value) => {
-    setFormData((prev) => {
-      const newAvailability = [...prev.availability]
-      newAvailability[dayIndex].day = value
-      return { ...prev, availability: newAvailability }
-    })
-  }
-
-  const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-
-  const handleGetLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        async (position) => {
-          const { latitude, longitude } = position.coords
-          
-          // Update location coordinates
-          setFormData((prev) => ({
-            ...prev,
-            location: {
-              latitude: latitude.toString(),
-              longitude: longitude.toString(),
-            },
-          }))
-          
-          // Fetch address using reverse geocoding
-          try {
-            const response = await fetch(
-              `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
-            )
-            const data = await response.json()
-            const address = data.address?.road || data.address?.street || data.address?.village || data.display_name || ""
-            
-            setFormData((prev) => ({
-              ...prev,
-              address: address,
-            }))
-          } catch (error) {
-            console.error("Error fetching address:", error)
-          }
-          
-          alert(`Location retrieved: ${latitude.toFixed(4)}, ${longitude.toFixed(4)}`)
-        },
-        (error) => {
-          alert(`${t("error.location")}: ${error.message}`)
-        }
-      )
-    } else {
-      alert(t("error.locationNotSupported"))
     }
   }
 
-  const handleSubmit = async (e) => {
+  const validateForm = () => {
+    const newErrors: { [key: string]: string } = {}
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+    if (!formData.first_name.trim()) newErrors.first_name = "First name is required"
+    if (!formData.last_name.trim()) newErrors.last_name = "Last name is required"
+    if (!formData.business_name.trim()) newErrors.business_name = "Business name is required"
+    if (!formData.phone_number.trim()) newErrors.phone_number = "Phone number is required"
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required"
+    } else if (!emailRegex.test(formData.email)) {
+      newErrors.email = "Please enter a valid email address"
+    }
+    if (!formData.business_email.trim()) {
+      newErrors.business_email = "Business email is required"
+    } else if (!emailRegex.test(formData.business_email)) {
+      newErrors.business_email = "Please enter a valid email address"
+    }
+    if (!formData.role) newErrors.role = "Role is required"
+    if (!formData.street.trim()) newErrors.street = "Street is required"
+    if (!formData.city.trim()) newErrors.city = "City is required"
+    if (!formData.latitude || !formData.longitude) {
+      newErrors.location = "Please select location on map"
+    }
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    
-    // Validate phone number has exactly 10 digits
-    if (formData.phoneNumber.length !== 10) {
-      alert(t("validation.phone"))
+
+    if (!validateForm()) {
       return
     }
-    
-    // Validate location
-    if (!formData.location.latitude || !formData.location.longitude) {
-      alert(t("validation.location"))
-      return
-    }
-    
-    // Prepare the data in the required format
-    const requestData = {
-      name: formData.name,
-      phoneNumber: `+20${formData.phoneNumber}`,
-      address: formData.address,
-      latitude: parseFloat(formData.location.latitude),
-      longitude: parseFloat(formData.location.longitude),
-      washTypes: formData.washTypes,
-      availability: formData.availability,
-    }
-    
-    console.log("Sending request data:", requestData)
-    
+
+    setLoading(true)
+
     try {
-      const response = await fetch("http://localhost:4000/v1/api/carwash/", {
+      const requestData = {
+        first_name: formData.first_name,
+        last_name: formData.last_name,
+        business_name: formData.business_name,
+        phone_number: formData.phone_number,
+        business_number: formData.business_number || "",
+        email: formData.email,
+        business_email: formData.business_email,
+        number_of_branches: parseInt(formData.number_of_branches),
+        role: formData.role,
+        longitude: parseFloat(formData.longitude),
+        latitude: parseFloat(formData.latitude),
+        street: formData.street,
+        street_number: formData.street_number,
+        city: formData.city,
+        area: formData.area,
+        address: formData.address,
+      }
+
+      const response = await fetch("http://localhost:4000/v1/api/carwash-form-registration/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(requestData),
       })
-      
+
       if (!response.ok) {
         const errorData = await response.json()
-        console.error("API Error:", errorData)
-        alert(`${t("validation.error")}: ${errorData.message}`)
-        return
+        throw new Error(errorData.message || "Registration failed")
       }
-      
+
       const result = await response.json()
-      alert(t("success.message"))
-      onSubmit(requestData)
+      alert("Registration submitted successfully!")
+      onSubmit?.(requestData)
+
+      // Reset form
+      setFormData({
+        first_name: "",
+        last_name: "",
+        business_name: "",
+        phone_number: "",
+        business_number: "",
+        email: "",
+        business_email: "",
+        number_of_branches: "1",
+        role: "",
+        trade_license: "",
+        street: "",
+        street_number: "",
+        city: "",
+        area: "",
+        address: "",
+        latitude: "",
+        longitude: "",
+      })
     } catch (error) {
-      alert(`${t("validation.error")}: ${error.message}`)
+      alert(`Error: ${error instanceof Error ? error.message : "Unknown error"}`)
       console.error("Registration error:", error)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -276,229 +205,289 @@ export function RegistrationForm({ onSubmit }) {
       <div className="max-w-4xl mx-auto">
         <Card>
           <CardHeader>
-            <CardTitle className="text-3xl">{t("form.title")}</CardTitle>
-            <CardDescription>{t("form.description")}</CardDescription>
+            <CardTitle className="text-3xl">Car Wash Registration</CardTitle>
+            <CardDescription>Please fill in all required fields to register your business</CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-8">
+            <form onSubmit={handleSubmit} className="space-y-10">
               {/* Basic Information */}
-              <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-primary">{t("form.basic")}</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="name">{t("form.name")}</Label>
+              <div className="space-y-6">
+                <h3 className="text-lg font-semibold text-primary mb-4">{t("registration.basicInfo")}</h3>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="first_name" className="text-sm font-medium">{t("registration.firstName")} *</Label>
                     <Input
-                      id="name"
-                      name="name"
-                      placeholder={t("form.namePlaceholder")}
-                      value={formData.name}
+                      id="first_name"
+                      name="first_name"
+                      placeholder={t("registration.firstName")}
+                      value={formData.first_name}
                       onChange={handleInputChange}
                       required
+                      className={errors.first_name ? "border-red-500" : ""}
                     />
+                    {errors.first_name && <p className="text-xs text-red-500 mt-1">{errors.first_name}</p>}
                   </div>
-                  <div>
-                    <Label htmlFor="phoneNumber">{t("form.phone")}</Label>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="last_name" className="text-sm font-medium">{t("registration.lastName")} *</Label>
+                    <Input
+                      id="last_name"
+                      name="last_name"
+                      placeholder={t("registration.lastName")}
+                      value={formData.last_name}
+                      onChange={handleInputChange}
+                      required
+                      className={errors.last_name ? "border-red-500" : ""}
+                    />
+                    {errors.last_name && <p className="text-xs text-red-500 mt-1">{errors.last_name}</p>}
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="business_name" className="text-sm font-medium">{t("registration.businessName")} *</Label>
+                  <Input
+                    id="business_name"
+                    name="business_name"
+                    placeholder={t("registration.businessName")}
+                    value={formData.business_name}
+                    onChange={handleInputChange}
+                    required
+                    className={errors.business_name ? "border-red-500" : ""}
+                  />
+                  {errors.business_name && <p className="text-xs text-red-500 mt-1">{errors.business_name}</p>}
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="phone_number" className="text-sm font-medium">{t("registration.phoneNumber")} *</Label>
                     <div className="flex items-center border border-input rounded-md overflow-hidden">
                       <span className="bg-muted px-3 py-2 font-semibold text-foreground">+20</span>
                       <Input
-                        id="phoneNumber"
-                        name="phoneNumber"
-                        placeholder="1234567890"
-                        value={formData.phoneNumber}
+                        id="phone_number"
+                        name="phone_number"
+                        placeholder="1001234567"
+                        value={formData.phone_number}
                         onChange={handleInputChange}
-                        maxLength="10"
                         className="border-0 focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                         required
                       />
                     </div>
-                    <p className="text-xs text-muted-foreground mt-1">{t("form.phoneHelper")}</p>
+                    {errors.phone_number && <p className="text-xs text-red-500 mt-1">{errors.phone_number}</p>}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="business_number" className="text-sm font-medium">{t("registration.businessPhone")}</Label>
+                    <div className="flex items-center border border-input rounded-md overflow-hidden">
+                      <span className="bg-muted px-3 py-2 font-semibold text-foreground">+20</span>
+                      <Input
+                        id="business_number"
+                        name="business_number"
+                        type="number"
+                        placeholder="1001234567"
+                        value={formData.business_number}
+                        onChange={handleInputChange}
+                        maxLength={10}
+                        onInput={(e) => {
+                          if (e.currentTarget.value.length > 10) {
+                            e.currentTarget.value = e.currentTarget.value.slice(0, 10)
+                          }
+                        }}
+                        className="border-0 focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                      />
+                    </div>
                   </div>
                 </div>
-                <div>
-                  <Label htmlFor="address">{t("form.address")}</Label>
+
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="email" className="text-sm font-medium">{t("registration.personalEmail")} *</Label>
+                    <Input
+                      id="email"
+                      name="email"
+                      type="email"
+                      placeholder="your@email.com"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      required
+                      className={errors.email ? "border-red-500" : ""}
+                    />
+                    {errors.email && <p className="text-xs text-red-500 mt-1">{errors.email}</p>}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="business_email" className="text-sm font-medium">{t("registration.businessEmail")} *</Label>
+                    <Input
+                      id="business_email"
+                      name="business_email"
+                      type="email"
+                      placeholder="business@email.com"
+                      value={formData.business_email}
+                      onChange={handleInputChange}
+                      required
+                      className={errors.business_email ? "border-red-500" : ""}
+                    />
+                    {errors.business_email && <p className="text-xs text-red-500 mt-1">{errors.business_email}</p>}
+                  </div>
+                </div>
+              </div>
+
+              {/* Business Information */}
+              <div className="space-y-6">
+                <h3 className="text-lg font-semibold text-primary mb-4">{t("registration.businessInfo")}</h3>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="number_of_branches" className="text-sm font-medium">{t("registration.numberOfBranches")} *</Label>
+                    <Input
+                      id="number_of_branches"
+                      name="number_of_branches"
+                      type="number"
+                      min="1"
+                      placeholder="1"
+                      value={formData.number_of_branches}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="role" className="text-sm font-medium">{t("registration.role")} *</Label>
+                    <Select value={formData.role} onValueChange={(value) => handleSelectChange("role", value)}>
+                      <SelectTrigger className={errors.role ? "border-red-500" : ""}>
+                        <SelectValue placeholder={t("registration.rolePlaceholder")} />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="owner">{t("registration.roleOwner")}</SelectItem>
+                        <SelectItem value="partner">{t("registration.rolePartner")}</SelectItem>
+                        <SelectItem value="manager">{t("registration.roleManager")}</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    {errors.role && <p className="text-xs text-red-500 mt-1">{errors.role}</p>}
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Location Information */}
+              <div className="space-y-6">
+                <h3 className="text-lg font-semibold text-primary mb-4">{t("registration.locationInfo")}</h3>
+
+                {/* Leaflet Map Component */}
+                <MapComponent
+                  latitude={parseFloat(formData.latitude) || 30.0444}
+                  longitude={parseFloat(formData.longitude) || 31.2357}
+                  onLocationChange={updateLocationFromMap}
+                  onAddressChange={handleAddressChange}
+                />
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="latitude" className="text-sm font-medium">{t("registration.latitude")}</Label>
+                    <Input
+                      id="latitude"
+                      name="latitude"
+                      type="number"
+                      step="0.0001"
+                      placeholder={t("registration.latitude")}
+                      value={formData.latitude}
+                      readOnly
+                      className={errors.location ? "border-red-500" : ""}
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="longitude" className="text-sm font-medium">{t("registration.longitude")}</Label>
+                    <Input
+                      id="longitude"
+                      name="longitude"
+                      type="number"
+                      step="0.0001"
+                      placeholder={t("registration.longitude")}
+                      value={formData.longitude}
+                      readOnly
+                      className={errors.location ? "border-red-500" : ""}
+                    />
+                  </div>
+                </div>
+
+                {errors.location && <p className="text-xs text-red-500">{errors.location}</p>}
+
+                <div className="space-y-2">
+                  <Label htmlFor="street" className="text-sm font-medium">{t("registration.street")} *</Label>
+                  <Input
+                    id="street"
+                    name="street"
+                    placeholder={t("registration.street")}
+                    value={formData.street}
+                    onChange={handleInputChange}
+                    required
+                    className={errors.street ? "border-red-500" : ""}
+                  />
+                  {errors.street && <p className="text-xs text-red-500 mt-1">{errors.street}</p>}
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="street_number" className="text-sm font-medium">{t("registration.streetNumber")}</Label>
+                    <Input
+                      id="street_number"
+                      name="street_number"
+                      placeholder={t("registration.streetNumber")}
+                      value={formData.street_number}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="city" className="text-sm font-medium">{t("registration.city")} *</Label>
+                    <Input
+                      id="city"
+                      name="city"
+                      placeholder={t("registration.city")}
+                      value={formData.city}
+                      onChange={handleInputChange}
+                      required
+                      className={errors.city ? "border-red-500" : ""}
+                    />
+                    {errors.city && <p className="text-xs text-red-500 mt-1">{errors.city}</p>}
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="area" className="text-sm font-medium">{t("registration.area")}</Label>
+                  <Input
+                    id="area"
+                    name="area"
+                    placeholder={t("registration.area")}
+                    value={formData.area}
+                    onChange={handleInputChange}
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="address" className="text-sm font-medium">{t("registration.address")}</Label>
                   <Input
                     id="address"
                     name="address"
-                    placeholder={t("form.addressPlaceholder")}
+                    placeholder={t("registration.address")}
                     value={formData.address}
                     onChange={handleInputChange}
-                    required
                   />
-                </div>
-                <div>
-                  <Label htmlFor="location">{t("form.location")}</Label>
-                  <Input
-                    id="location"
-                    name="location"
-                    placeholder={t("form.locationHelper")}
-                    value={
-                      formData.location.latitude && formData.location.longitude
-                        ? `${formData.location.latitude}, ${formData.location.longitude}`
-                        : ""
-                    }
-                    readOnly
-                    disabled
-                  />
-                </div>
-                <Button
-                  type="button"
-                  onClick={handleGetLocation}
-                  variant="outline"
-                  className="w-full"
-                >
-                  {t("form.getLocation")}
-                </Button>
-              </div>
-
-              {/* Wash Types */}
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-lg font-semibold text-primary">{t("form.washTypes")}</h3>
-                  <Button type="button" onClick={addWashType} variant="outline" size="sm">
-                    {t("form.addType")}
-                  </Button>
-                </div>
-                <div className="space-y-3">
-                  {formData.washTypes.map((washType, index) => (
-                    <div key={index} className="grid grid-cols-1 md:grid-cols-3 gap-3 p-4 bg-muted rounded-lg">
-                      <div>
-                        <Label className="text-sm">{t("form.typeName")}</Label>
-                        <Input
-                          placeholder={t("form.typeNamePlaceholder")}
-                          value={washType.name}
-                          onChange={(e) => handleWashTypeChange(index, "name", e.target.value)}
-                        />
-                      </div>
-                      <div>
-                        <Label className="text-sm">{t("form.price")}</Label>
-                        <Input
-                          type="number"
-                          placeholder={t("form.pricePlaceholder")}
-                          value={washType.price}
-                          onChange={(e) => handleWashTypeChange(index, "price", e.target.value)}
-                        />
-                      </div>
-                      <div>
-                        <Label className="text-sm">{t("form.fieldDescription")}</Label>
-                        <Input
-                          placeholder={t("form.descriptionPlaceholder")}
-                          value={washType.description}
-                          onChange={(e) => handleWashTypeChange(index, "description", e.target.value)}
-                        />
-                      </div>
-                      {formData.washTypes.length > 1 && (
-                        <button
-                          type="button"
-                          onClick={() => removeWashType(index)}
-                          className="text-destructive hover:text-destructive/80 text-sm font-medium md:col-start-3 md:justify-self-end"
-                        >
-                          {t("form.remove")}
-                        </button>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Availability */}
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-lg font-semibold text-primary">{t("form.availability")}</h3>
-                  <Button type="button" onClick={addDay} variant="outline" size="sm">
-                    {t("form.addDay")}
-                  </Button>
-                </div>
-                <div className="space-y-4">
-                  {formData.availability.map((day, dayIndex) => (
-                    <div key={dayIndex} className="border border-border rounded-lg p-4">
-                      <div className="flex items-center justify-between mb-4">
-                        <div className="flex-1">
-                          <Label className="text-sm font-semibold">{t("form.selectDay")}</Label>
-                          <select
-                            value={day.day}
-                            onChange={(e) => handleDayChange(dayIndex, e.target.value)}
-                            className="w-full mt-1 px-3 py-2 border border-input rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-                          >
-                            {days.map((d) => (
-                              <option key={d} value={d}>
-                                {d}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-                        {formData.availability.length > 1 && (
-                          <button
-                            type="button"
-                            onClick={() => removeDay(dayIndex)}
-                            className="text-destructive hover:text-destructive/80 text-sm font-medium ml-4 mt-6"
-                          >
-                            {t("form.removeDay")}
-                          </button>
-                        )}
-                      </div>
-                      <div className="space-y-3">
-                        {day.slots.map((slot, slotIndex) => (
-                          <div key={slotIndex} className="grid grid-cols-1 md:grid-cols-4 gap-3 p-3 bg-muted rounded">
-                            <div>
-                              <Label className="text-sm">{t("form.startTime")}</Label>
-                              <Input
-                                type="time"
-                                value={slot.startTime}
-                                onChange={(e) => handleSlotChange(dayIndex, slotIndex, "startTime", e.target.value)}
-                              />
-                            </div>
-                            <div>
-                              <Label className="text-sm">{t("form.endTime")}</Label>
-                              <Input
-                                type="time"
-                                value={slot.endTime}
-                                onChange={(e) => handleSlotChange(dayIndex, slotIndex, "endTime", e.target.value)}
-                              />
-                            </div>
-                            <div>
-                              <Label className="text-sm">{t("form.slots")}</Label>
-                              <Input
-                                type="number"
-                                min="1"
-                                value={slot.slotNumber}
-                                onChange={(e) => handleSlotChange(dayIndex, slotIndex, "slotNumber", e.target.value)}
-                              />
-                            </div>
-                            {day.slots.length > 1 && (
-                              <div className="flex items-end">
-                                <button
-                                  type="button"
-                                  onClick={() => removeSlot(dayIndex, slotIndex)}
-                                  className="text-destructive hover:text-destructive/80 text-sm font-medium w-full py-2"
-                                >
-                                  {t("form.remove")}
-                                </button>
-                              </div>
-                            )}
-                          </div>
-                        ))}
-                      </div>
-                      <Button
-                        type="button"
-                        onClick={() => addSlot(dayIndex)}
-                        variant="outline"
-                        size="sm"
-                        className="mt-3"
-                      >
-                        {t("form.addSlot")}
-                      </Button>
-                    </div>
-                  ))}
                 </div>
               </div>
 
               {/* Submit Button */}
-              <Button
-                type="submit"
-                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-3 rounded-lg"
-              >
-                {t("form.submit")}
-              </Button>
+              <div className="flex justify-center pt-4">
+                <Button
+                  type="submit"
+                  disabled={loading}
+                  className="px-6 md:px-20 text-sm md:text-base py-2 md:py-3 bg-gradient-to-r from-blue-500 via-blue-400 to-cyan-400 hover:from-blue-600 hover:via-blue-500 hover:to-cyan-500 text-white font-semibold rounded-lg"
+                >
+                  {loading ? t("registration.gettingLocation") : t("registration.registerNow")}
+                </Button>
+              </div>
             </form>
           </CardContent>
         </Card>
