@@ -155,7 +155,7 @@ export function RegistrationForm({ onSubmit }) {
         address: formData.address,
       }
 
-      const response = await fetch("http://localhost:4000/v1/api/carwash-form-registration/", {
+      const response = await fetch("https://car-wash-delta-seven.vercel.app/v1/api/carwash-form-registration/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
