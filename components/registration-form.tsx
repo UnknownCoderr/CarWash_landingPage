@@ -204,14 +204,14 @@ export function RegistrationForm({ onSubmit }: { onSubmit?: (data: any) => void 
       <div className="max-w-4xl mx-auto">
         <Card>
           <CardHeader>
-            <CardTitle className="text-3xl text-blue-600">{t("registration.title")}</CardTitle>
+            <CardTitle className="text-3xl bg-gradient-to-r from-sky-400 via-blue-500 to-blue-600 bg-clip-text text-transparent">{t("registration.title")}</CardTitle>
             <CardDescription>{t("registration.description")}</CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-10">
               {/* Basic Information */}
               <div className="space-y-6">
-                <h3 className="text-lg font-semibold text-primary mb-4">{t("registration.basicInfo")}</h3>
+                <h3 className="text-lg font-semibold bg-gradient-to-r from-sky-400 via-blue-500 to-blue-600 bg-clip-text text-transparent mb-4">{t("registration.basicInfo")}</h3>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
@@ -334,7 +334,7 @@ export function RegistrationForm({ onSubmit }: { onSubmit?: (data: any) => void 
 
               {/* Business Information */}
               <div className="space-y-6">
-                <h3 className="text-lg font-semibold text-primary mb-4">{t("registration.businessInfo")}</h3>
+                <h3 className="text-lg font-semibold bg-gradient-to-r from-sky-400 via-blue-500 to-blue-600 bg-clip-text text-transparent mb-4">{t("registration.businessInfo")}</h3>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
@@ -372,7 +372,7 @@ export function RegistrationForm({ onSubmit }: { onSubmit?: (data: any) => void 
 
               {/* Location Information */}
               <div className="space-y-6">
-                <h3 className="text-lg font-semibold text-primary mb-4">{t("registration.locationInfo")}</h3>
+                <h3 className="text-lg font-semibold bg-gradient-to-r from-sky-400 via-blue-500 to-blue-600 bg-clip-text text-transparent mb-4">{t("registration.locationInfo")}</h3>
 
                 {/* Leaflet Map Component */}
                 <MapComponent
