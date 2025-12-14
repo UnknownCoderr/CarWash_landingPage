@@ -204,8 +204,8 @@ export function RegistrationForm({ onSubmit }: { onSubmit?: (data: any) => void 
       <div className="max-w-4xl mx-auto">
         <Card>
           <CardHeader>
-            <CardTitle className="text-3xl">Car Wash Registration</CardTitle>
-            <CardDescription>Please fill in all required fields to register your business</CardDescription>
+            <CardTitle className="text-3xl text-blue-600">{t("registration.title")}</CardTitle>
+            <CardDescription>{t("registration.description")}</CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-10">
@@ -215,7 +215,7 @@ export function RegistrationForm({ onSubmit }: { onSubmit?: (data: any) => void 
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <Label htmlFor="first_name" className="text-sm font-medium">{t("registration.firstName")} *</Label>
+                    <Label htmlFor="first_name" className="text-sm font-medium">{t("registration.firstName")} <span className="text-red-500">*</span></Label>
                     <Input
                       id="first_name"
                       name="first_name"
@@ -223,13 +223,13 @@ export function RegistrationForm({ onSubmit }: { onSubmit?: (data: any) => void 
                       value={formData.first_name}
                       onChange={handleInputChange}
                       required
-                      className={errors.first_name ? "border-red-500" : ""}
+                      className={errors.first_name ? "border-red-500" : "border-sky-400 focus:border-sky-300"}
                     />
                     {errors.first_name && <p className="text-xs text-red-500 mt-1">{errors.first_name}</p>}
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="last_name" className="text-sm font-medium">{t("registration.lastName")} *</Label>
+                    <Label htmlFor="last_name" className="text-sm font-medium">{t("registration.lastName")} <span className="text-red-500">*</span></Label>
                     <Input
                       id="last_name"
                       name="last_name"
@@ -237,14 +237,14 @@ export function RegistrationForm({ onSubmit }: { onSubmit?: (data: any) => void 
                       value={formData.last_name}
                       onChange={handleInputChange}
                       required
-                      className={errors.last_name ? "border-red-500" : ""}
+                      className={errors.last_name ? "border-red-500" : "border-sky-400 focus:border-sky-300"}
                     />
                     {errors.last_name && <p className="text-xs text-red-500 mt-1">{errors.last_name}</p>}
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="business_name" className="text-sm font-medium">{t("registration.businessName")} *</Label>
+                  <Label htmlFor="business_name" className="text-sm font-medium">{t("registration.businessName")} <span className="text-red-500">*</span></Label>
                   <Input
                     id="business_name"
                     name="business_name"
@@ -252,15 +252,15 @@ export function RegistrationForm({ onSubmit }: { onSubmit?: (data: any) => void 
                     value={formData.business_name}
                     onChange={handleInputChange}
                     required
-                    className={errors.business_name ? "border-red-500" : ""}
+                    className={errors.business_name ? "border-red-500" : "border-sky-400 focus:border-sky-300"}
                   />
                   {errors.business_name && <p className="text-xs text-red-500 mt-1">{errors.business_name}</p>}
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <Label htmlFor="phone_number" className="text-sm font-medium">{t("registration.phoneNumber")} *</Label>
-                    <div className="flex items-center border border-input rounded-md overflow-hidden">
+                    <Label htmlFor="phone_number" className="text-sm font-medium">{t("registration.phoneNumber")} <span className="text-red-500">*</span></Label>
+                    <div className="flex items-center border border-sky-400 rounded-md overflow-hidden focus-within:border-sky-300">
                       <span className="bg-muted px-3 py-2 font-semibold text-foreground">+20</span>
                       <Input
                         id="phone_number"
@@ -277,7 +277,7 @@ export function RegistrationForm({ onSubmit }: { onSubmit?: (data: any) => void 
 
                   <div className="space-y-2">
                     <Label htmlFor="business_number" className="text-sm font-medium">{t("registration.businessPhone")}</Label>
-                    <div className="flex items-center border border-input rounded-md overflow-hidden">
+                    <div className="flex items-center border border-sky-400 rounded-md overflow-hidden focus-within:border-sky-300">
                       <span className="bg-muted px-3 py-2 font-semibold text-foreground">+20</span>
                       <Input
                         id="business_number"
@@ -301,7 +301,7 @@ export function RegistrationForm({ onSubmit }: { onSubmit?: (data: any) => void 
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <Label htmlFor="email" className="text-sm font-medium">{t("registration.personalEmail")} *</Label>
+                    <Label htmlFor="email" className="text-sm font-medium">{t("registration.personalEmail")} <span className="text-red-500">*</span></Label>
                     <Input
                       id="email"
                       name="email"
@@ -310,13 +310,13 @@ export function RegistrationForm({ onSubmit }: { onSubmit?: (data: any) => void 
                       value={formData.email}
                       onChange={handleInputChange}
                       required
-                      className={errors.email ? "border-red-500" : ""}
+                      className={errors.email ? "border-red-500" : "border-sky-400 focus:border-sky-300"}
                     />
                     {errors.email && <p className="text-xs text-red-500 mt-1">{errors.email}</p>}
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="business_email" className="text-sm font-medium">{t("registration.businessEmail")} *</Label>
+                    <Label htmlFor="business_email" className="text-sm font-medium">{t("registration.businessEmail")} <span className="text-red-500">*</span></Label>
                     <Input
                       id="business_email"
                       name="business_email"
@@ -325,7 +325,7 @@ export function RegistrationForm({ onSubmit }: { onSubmit?: (data: any) => void 
                       value={formData.business_email}
                       onChange={handleInputChange}
                       required
-                      className={errors.business_email ? "border-red-500" : ""}
+                      className={errors.business_email ? "border-red-500" : "border-sky-400 focus:border-sky-300"}
                     />
                     {errors.business_email && <p className="text-xs text-red-500 mt-1">{errors.business_email}</p>}
                   </div>
@@ -338,7 +338,7 @@ export function RegistrationForm({ onSubmit }: { onSubmit?: (data: any) => void 
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <Label htmlFor="number_of_branches" className="text-sm font-medium">{t("registration.numberOfBranches")} *</Label>
+                    <Label htmlFor="number_of_branches" className="text-sm font-medium">{t("registration.numberOfBranches")} <span className="text-red-500">*</span></Label>
                     <Input
                       id="number_of_branches"
                       name="number_of_branches"
@@ -348,13 +348,14 @@ export function RegistrationForm({ onSubmit }: { onSubmit?: (data: any) => void 
                       value={formData.number_of_branches}
                       onChange={handleInputChange}
                       required
+                      className="border-sky-400 focus:border-sky-300"
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="role" className="text-sm font-medium">{t("registration.role")} *</Label>
+                    <Label htmlFor="role" className="text-sm font-medium">{t("registration.role")} <span className="text-red-500">*</span></Label>
                     <Select value={formData.role} onValueChange={(value) => handleSelectChange("role", value)}>
-                      <SelectTrigger className={errors.role ? "border-red-500" : ""}>
+                      <SelectTrigger className={errors.role ? "border-red-500" : "border-sky-400 focus:border-sky-300"}>
                         <SelectValue placeholder={t("registration.rolePlaceholder")} />
                       </SelectTrigger>
                       <SelectContent>
@@ -386,7 +387,7 @@ export function RegistrationForm({ onSubmit }: { onSubmit?: (data: any) => void 
                 {errors.location && <p className="text-xs text-red-500">{errors.location}</p>}
 
                 <div className="space-y-2">
-                  <Label htmlFor="street" className="text-sm font-medium">{t("registration.street")} *</Label>
+                  <Label htmlFor="street" className="text-sm font-medium">{t("registration.street")} <span className="text-red-500">*</span></Label>
                   <Input
                     id="street"
                     name="street"
@@ -394,7 +395,7 @@ export function RegistrationForm({ onSubmit }: { onSubmit?: (data: any) => void 
                     value={formData.street}
                     onChange={handleInputChange}
                     required
-                    className={errors.street ? "border-red-500" : ""}
+                    className={errors.street ? "border-red-500" : "border-sky-400 focus:border-sky-300"}
                   />
                   {errors.street && <p className="text-xs text-red-500 mt-1">{errors.street}</p>}
                 </div>
@@ -408,11 +409,12 @@ export function RegistrationForm({ onSubmit }: { onSubmit?: (data: any) => void 
                       placeholder={t("registration.streetNumber")}
                       value={formData.street_number}
                       onChange={handleInputChange}
+                      className="border-sky-400 focus:border-sky-300"
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="city" className="text-sm font-medium">{t("registration.city")} *</Label>
+                    <Label htmlFor="city" className="text-sm font-medium">{t("registration.city")} <span className="text-red-500">*</span></Label>
                     <Input
                       id="city"
                       name="city"
@@ -420,7 +422,7 @@ export function RegistrationForm({ onSubmit }: { onSubmit?: (data: any) => void 
                       value={formData.city}
                       onChange={handleInputChange}
                       required
-                      className={errors.city ? "border-red-500" : ""}
+                      className={errors.city ? "border-red-500" : "border-sky-400 focus:border-sky-300"}
                     />
                     {errors.city && <p className="text-xs text-red-500 mt-1">{errors.city}</p>}
                   </div>
@@ -434,6 +436,7 @@ export function RegistrationForm({ onSubmit }: { onSubmit?: (data: any) => void 
                     placeholder={t("registration.area")}
                     value={formData.area}
                     onChange={handleInputChange}
+                    className="border-sky-400 focus:border-sky-300"
                   />
                 </div>
 
@@ -445,6 +448,7 @@ export function RegistrationForm({ onSubmit }: { onSubmit?: (data: any) => void 
                     placeholder={t("registration.address")}
                     value={formData.address}
                     onChange={handleInputChange}
+                    className="border-sky-400 focus:border-sky-300"
                   />
                 </div>
               </div>

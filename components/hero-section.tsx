@@ -3,7 +3,8 @@
 import { useTranslation } from "react-i18next"
 
 export function HeroSection() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const isArabic = i18n.language === "ar"
   
   return (
     <section className="relative bg-gradient-to-br from-primary via-secondary to-accent py-20 px-4 text-white overflow-hidden">
@@ -13,12 +14,12 @@ export function HeroSection() {
 
       <div className="relative max-w-6xl mx-auto flex flex-col items-center text-center gap-8">
         {/* Logo/Brand */}
-        <div className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-md px-6 py-3 rounded-full border border-white/20">
+        <div className={`inline-flex items-center gap-3 bg-white/10 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 ${isArabic ? "flex-row-reverse" : ""}`}>
           <span className="text-sm font-semibold">GoClean</span>
         </div>
 
         {/* Main heading */}
-        <div className="space-y-4 max-w-3xl">
+        <div className={`space-y-4 max-w-3xl ${isArabic ? "text-right" : "text-center"}`}>
           <h1 className="text-4xl md:text-6xl font-bold leading-tight text-balance">{t("hero.title")}</h1>
           <p className="text-lg md:text-xl text-white/90 text-pretty">
             {t("hero.description")}
@@ -27,17 +28,17 @@ export function HeroSection() {
 
         {/* Benefits for business owners */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-12 w-full">
-          <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 text-left">
+          <div className={`bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 flex flex-col items-center ${isArabic ? "text-right" : "text-left"}`}>
             <div className="text-3xl mb-3">📱</div>
             <h3 className="font-semibold text-lg mb-2">{t("hero.benefits.management.title")}</h3>
             <p className="text-sm text-white/80">{t("hero.benefits.management.description")}</p>
           </div>
-          <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 text-left">
+          <div className={`bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 flex flex-col items-center ${isArabic ? "text-right" : "text-left"}`}>
             <div className="text-3xl mb-3">👥</div>
             <h3 className="font-semibold text-lg mb-2">{t("hero.benefits.customers.title")}</h3>
             <p className="text-sm text-white/80">{t("hero.benefits.customers.description")}</p>
           </div>
-          <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 text-left">
+          <div className={`bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 flex flex-col items-center ${isArabic ? "text-right" : "text-left"}`}>
             <div className="text-3xl mb-3">💹</div>
             <h3 className="font-semibold text-lg mb-2">{t("hero.benefits.revenue.title")}</h3>
             <p className="text-sm text-white/80">{t("hero.benefits.revenue.description")}</p>

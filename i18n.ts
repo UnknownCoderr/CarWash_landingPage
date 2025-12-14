@@ -85,6 +85,8 @@ const resources = {
       "registration.searchButton": "Search",
       "registration.registerNow": "Register Now",
       "registration.required": "required",
+      "registration.title": "Car Wash Registration",
+      "registration.description": "Please fill in all required fields to register your business",
     },
   },
   ar: {
@@ -169,6 +171,8 @@ const resources = {
       "registration.searchButton": "بحث",
       "registration.registerNow": "سجل الآن",
       "registration.required": "مطلوب",
+      "registration.title": "تسجيل غسيل السيارات",
+      "registration.description": "يرجى ملء جميع الحقول المطلوبة لتسجيل عملك",
     },
   },
 }
