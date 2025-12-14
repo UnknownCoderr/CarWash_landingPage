@@ -14,7 +14,7 @@ export function HeroSection() {
       <div className="relative max-w-6xl mx-auto flex flex-col items-center text-center gap-8">
         {/* Logo/Brand */}
         <div className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-md px-6 py-3 rounded-full border border-white/20">
-          <span className="text-sm font-semibold">CleanGo</span>
+          <span className="text-sm font-semibold">GoClean</span>
         </div>
 
         {/* Main heading */}

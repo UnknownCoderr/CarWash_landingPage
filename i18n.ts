@@ -90,7 +90,7 @@ const resources = {
   ar: {
     translation: {
       "hero.title": "نمّ عملك في غسيل السيارات",
-      "hero.description": "انضم إلى منصتنا وصل إلى المزيد من العملاء بنظام حجز سلس. أدر عملك وعرض خدماتك وزيادة الإيرادات بسهولة.",
+      "hero.description": "انضم إلى منصتنا وصل إلى المزيد من العملاء بنظام حجز سلس. أدر عملك واعرض خدماتك وزيادة الإيرادات بسهولة.",
       "hero.benefits.management.title": "إدارة سهلة",
       "hero.benefits.management.description": "تحكم في خدماتك والمتاحية والتسعير من لوحة قيادة واحدة",
       "hero.benefits.customers.title": "عملاء أكثر",

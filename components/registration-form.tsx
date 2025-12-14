@@ -382,35 +382,7 @@ export function RegistrationForm({ onSubmit }) {
                   onAddressChange={handleAddressChange}
                 />
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="latitude" className="text-sm font-medium">{t("registration.latitude")}</Label>
-                    <Input
-                      id="latitude"
-                      name="latitude"
-                      type="number"
-                      step="0.0001"
-                      placeholder={t("registration.latitude")}
-                      value={formData.latitude}
-                      readOnly
-                      className={errors.location ? "border-red-500" : ""}
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="longitude" className="text-sm font-medium">{t("registration.longitude")}</Label>
-                    <Input
-                      id="longitude"
-                      name="longitude"
-                      type="number"
-                      step="0.0001"
-                      placeholder={t("registration.longitude")}
-                      value={formData.longitude}
-                      readOnly
-                      className={errors.location ? "border-red-500" : ""}
-                    />
-                  </div>
-                </div>
+                {/* Latitude/Longitude fields removed from UI; values still managed in state and sent on submit */}
 
                 {errors.location && <p className="text-xs text-red-500">{errors.location}</p>}
 

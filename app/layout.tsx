@@ -9,7 +9,7 @@ const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "CleanGo - Professional Car Wash Service",
+  title: "GoClean - Professional Car Wash Service",
   description: "Book your car wash in one click - professional on-demand car cleaning service",
   generator: "v0.app",
   icons: {
