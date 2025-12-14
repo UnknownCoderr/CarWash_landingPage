@@ -17,7 +17,7 @@ const MapComponent = dynamic(() => import("@/components/map-component"), {
   loading: () => <div className="w-full h-96 bg-gray-200 rounded-lg flex items-center justify-center">Loading map...</div>,
 })
 
-export function RegistrationForm({ onSubmit }) {
+export function RegistrationForm({ onSubmit }: { onSubmit?: (data: any) => void }) {
   const { t } = useTranslation()
 
   const [formData, setFormData] = useState({
@@ -183,7 +183,6 @@ export function RegistrationForm({ onSubmit }) {
         business_email: "",
         number_of_branches: "1",
         role: "",
-        trade_license: "",
         street: "",
         street_number: "",
         city: "",
