@@ -21,10 +21,10 @@ export function RegistrationForm({ onSubmit }: { onSubmit?: (data: any) => void 
   const { t } = useTranslation()
 
   const [formData, setFormData] = useState({
-    first_name: "",
-    last_name: "",
+    firstName: "",
+    lastName: "",
     business_name: "",
-    phone_number: "",
+    phoneNumber: "",
     business_number: "",
     email: "",
     business_email: "",
@@ -101,10 +101,10 @@ export function RegistrationForm({ onSubmit }: { onSubmit?: (data: any) => void 
     const newErrors: { [key: string]: string } = {}
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-    if (!formData.first_name.trim()) newErrors.first_name = "First name is required"
-    if (!formData.last_name.trim()) newErrors.last_name = "Last name is required"
+    if (!formData.firstName.trim()) newErrors.firstName = "First name is required"
+    if (!formData.lastName.trim()) newErrors.lastName = "Last name is required"
     if (!formData.business_name.trim()) newErrors.business_name = "Business name is required"
-    if (!formData.phone_number.trim()) newErrors.phone_number = "Phone number is required"
+    if (!formData.phoneNumber.trim()) newErrors.phoneNumber = "Phone number is required"
     if (!formData.email.trim()) {
       newErrors.email = "Email is required"
     } else if (!emailRegex.test(formData.email)) {
@@ -137,10 +137,10 @@ export function RegistrationForm({ onSubmit }: { onSubmit?: (data: any) => void 
 
     try {
       const requestData = {
-        first_name: formData.first_name,
-        last_name: formData.last_name,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
         business_name: formData.business_name,
-        phone_number: formData.phone_number,
+        phoneNumber: formData.phoneNumber,
         business_number: formData.business_number || "",
         email: formData.email,
         business_email: formData.business_email,
@@ -155,7 +155,7 @@ export function RegistrationForm({ onSubmit }: { onSubmit?: (data: any) => void 
         address: formData.address,
       }
 
-      const response = await fetch("https://car-wash-delta-seven.vercel.app/v1/api/carwash-form-registration/", {
+      const response = await fetch("http://localhost:4000/v1/api/carwash-form-registration/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -174,10 +174,10 @@ export function RegistrationForm({ onSubmit }: { onSubmit?: (data: any) => void 
 
       // Reset form
       setFormData({
-        first_name: "",
-        last_name: "",
+        firstName: "",
+        lastName: "",
         business_name: "",
-        phone_number: "",
+        phoneNumber: "",
         business_number: "",
         email: "",
         business_email: "",
@@ -215,31 +215,31 @@ export function RegistrationForm({ onSubmit }: { onSubmit?: (data: any) => void 
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <Label htmlFor="first_name" className="text-sm font-medium">{t("registration.firstName")} <span className="text-red-500">*</span></Label>
+                    <Label htmlFor="firstName" className="text-sm font-medium">{t("registration.firstName")} <span className="text-red-500">*</span></Label>
                     <Input
-                      id="first_name"
-                      name="first_name"
+                      id="firstName"
+                      name="firstName"
                       placeholder={t("registration.firstName")}
-                      value={formData.first_name}
+                      value={formData.firstName}
                       onChange={handleInputChange}
                       required
-                      className={errors.first_name ? "border-red-500" : "border-sky-400 focus:border-sky-300"}
+                      className={errors.firstName ? "border-red-500" : "border-sky-400 focus:border-sky-300"}
                     />
-                    {errors.first_name && <p className="text-xs text-red-500 mt-1">{errors.first_name}</p>}
+                    {errors.firstName && <p className="text-xs text-red-500 mt-1">{errors.firstName}</p>}
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="last_name" className="text-sm font-medium">{t("registration.lastName")} <span className="text-red-500">*</span></Label>
+                    <Label htmlFor="lastName" className="text-sm font-medium">{t("registration.lastName")} <span className="text-red-500">*</span></Label>
                     <Input
-                      id="last_name"
-                      name="last_name"
+                      id="lastName"
+                      name="lastName"
                       placeholder={t("registration.lastName")}
-                      value={formData.last_name}
+                      value={formData.lastName}
                       onChange={handleInputChange}
                       required
-                      className={errors.last_name ? "border-red-500" : "border-sky-400 focus:border-sky-300"}
+                      className={errors.lastName ? "border-red-500" : "border-sky-400 focus:border-sky-300"}
                     />
-                    {errors.last_name && <p className="text-xs text-red-500 mt-1">{errors.last_name}</p>}
+                    {errors.lastName && <p className="text-xs text-red-500 mt-1">{errors.lastName}</p>}
                   </div>
                 </div>
 
@@ -259,20 +259,20 @@ export function RegistrationForm({ onSubmit }: { onSubmit?: (data: any) => void 
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <Label htmlFor="phone_number" className="text-sm font-medium">{t("registration.phoneNumber")} <span className="text-red-500">*</span></Label>
+                    <Label htmlFor="phoneNumber" className="text-sm font-medium">{t("registration.phoneNumber")} <span className="text-red-500">*</span></Label>
                     <div className="flex items-center border border-sky-400 rounded-md overflow-hidden focus-within:border-sky-300">
                       <span className="bg-muted px-3 py-2 font-semibold text-foreground">+20</span>
                       <Input
-                        id="phone_number"
-                        name="phone_number"
+                        id="phoneNumber"
+                        name="phoneNumber"
                         placeholder="1001234567"
-                        value={formData.phone_number}
+                        value={formData.phoneNumber}
                         onChange={handleInputChange}
                         className="border-0 focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                         required
                       />
                     </div>
-                    {errors.phone_number && <p className="text-xs text-red-500 mt-1">{errors.phone_number}</p>}
+                    {errors.phoneNumber && <p className="text-xs text-red-500 mt-1">{errors.phoneNumber}</p>}
                   </div>
 
                   <div className="space-y-2">
