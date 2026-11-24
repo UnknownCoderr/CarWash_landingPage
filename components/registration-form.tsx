@@ -155,7 +155,7 @@ export function RegistrationForm({ onSubmit }: { onSubmit?: (data: any) => void 
         address: formData.address,
       }
 
-      const response = await fetch("https://fasugames2026.eusf.org.eg/carwash-api/carwash-form-registration/", {
+      const response = await fetch("https://goclean.trianglesolutions.net/carwash-api/v1/api/carwash-form-registration/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
